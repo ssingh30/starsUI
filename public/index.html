@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <style>
+#stars{
+  font-size: 30px;
+  cursor: pointer;
+}
+.far{
+  cursor: pointer;
+  font-size: 35px;
+}
+    .fas{
+      -webkit-text-stroke-width: 3px;
+      -webkit-text-stroke-color: black;
+      cursor: pointer;
+      color: yellow;
+    }
+    .container{
+      display:block;
+    }
+    .texto{
+      margin-top: 10px;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="stars" class="container">
+      <i  id="1" class="far fa-star" data-id="1"></i>
+      <i id="2" class="far fa-star" data-id="2"></i>
+      <i id="3" class="far fa-star" data-id="3"></i>
+      <i id="4" class="far fa-star" data-id="4"></i>
+      <i id="5" class="far fa-star" data-id="5"></i>
+    </div>
+    <div class="texto" id="text">
+    </div>
+    </body>
+      <script>
+let selected=false;
+Array.from(document.querySelectorAll('i')).forEach(element=>{
+  element.onmouseover=(e)=>{
+    if (selected) return;
+    updateLeft(e.currentTarget.dataset.id);
+    updateRight(e.currentTarget.dataset.id);
+    document.getElementById('text').innerHTML = `you are giving ${e.currentTarget.dataset.id} stars!`
+  }
+});
+const selectedStar=(e)=>{
+  document.getElementById('text').innerHTML = `you have given ${e.currentTarget.id} stars!`;
+  selected = true;
+  updateLeft(e.currentTarget.dataset.id);
+  updateRight(e.currentTarget.dataset.id);
+}
+const updateLeft=(id)=>{
+  if (id==0) return;
+  const star = document.getElementById(id);
+  star.onclick=(e)=>{
+    selectedStar(e);
+  }
+  star.classList.add('fas');
+  return updateLeft(id-1);
+}
+const updateRight=( id, target=5)=>{
+  if (id==target) return;
+  const star=document.getElementById(target);
+  star.onclick=(e)=> selectedStar(e);
+  star.classList.remove('fas');
+  return updateRight( id, target-1);
+} 
+stars.onmouseleave=()=>{
+  selected=false;
+}
+      </script>
+  </body>
+</html>
